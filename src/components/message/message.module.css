@@ -1,0 +1,36 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    padding: 30px;
+    background-color: white;
+    position: absolute;
+    width: max-content;
+    height: max-content;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto auto;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+.title{
+    color: black;
+}
+.control{
+    display: flex;
+    column-gap: 10px;
+}
+.button{
+    background-color: #f7f9fb;
+    color: #ccd5de;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+.button:hover{
+    opacity: 0.5;
+}

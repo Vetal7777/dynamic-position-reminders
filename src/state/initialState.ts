@@ -1,6 +1,7 @@
 import {InitialState} from "../models/initialState";
 
 const initialState:InitialState = {
+    newItem: null,
     editMode: null,
     createMode: null,
     list:[

@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import initialState from "../../state/initialState";
-import {ItemI, PositionI} from "../../models/initialState";
+import {ItemI, NewItemI, PositionI} from "../../models/initialState";
 
 export const appSlice = createSlice({
     name: 'App',
@@ -34,6 +34,9 @@ export const appSlice = createSlice({
         setCreateMode(state,action:PayloadAction<number | string | null>){
             state.createMode = action.payload;
         },
+        createItem(state,action:PayloadAction<NewItemI | null>){
+            state.newItem = action.payload;
+        }
     }
 })
 

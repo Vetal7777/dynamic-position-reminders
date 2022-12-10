@@ -14,6 +14,8 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
     const list = useAppSelector(({list}) => list);
     const editMode = useAppSelector(({editMode}) => editMode === item.id);
     const createMode = useAppSelector(({createMode}) => createMode === item.id);
+    const newItem = useAppSelector(({newItem}) => newItem);
+    const blockClick = !!newItem;
     const alpha = !item.id;
     const [Value,setValue] = useState<string>('')
 
@@ -37,19 +39,13 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
                     }
                 break;
                 case create:
-                    const newItem = {
-                        title: '',
-                        id: Math.round(Math.random() * 10000000),
-                        type: 'Category',
-                        children: []
-                    };
+                    const createdItem = {...newItem};
+                    delete createdItem.parent;
                     if(item.id !== id){
                         const data = {...item,children: getUpdatedList(item.children,id,'create')};
                         acc.push(data as never)
-                    }
-                    else {
-                        const data = {...item,children: [
-                            ...item.children,newItem]};
+                    }else {
+                        const data = {...item,children: [...item.children,createdItem]};
                         acc.push(data as never)
                     }
                 break;
@@ -69,17 +65,17 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
         }
     }
     function onCreate(){
-        const newItem = {
+        const data:ItemI = {
             title: '',
             id: Math.round(Math.random() * 10000000),
-            type: '',
+            type: null,
             children: []
         };
-        switch (true){
-            case alpha:
-                dispatch(appSlice.actions.setList([...list,{...newItem,type: 'Category'}]))
-                dispatch(appSlice.actions.setCreateMode(newItem.id));
-            break;
+        if(alpha){
+            dispatch(appSlice.actions.setList([...list, {...data, type: 'Category'}]));
+            dispatch(appSlice.actions.setCreateMode(data.id));
+        }else{
+            dispatch(appSlice.actions.createItem({...data,parent: item.id}))
         }
     }
     function onCancel(){
@@ -89,6 +85,7 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
             break;
             case createMode:
                 dispatch(appSlice.actions.setList(getUpdatedList(list,item.id,'delete')))
+                dispatch(appSlice.actions.setCreateMode(null))
             break;
         }
     }
@@ -98,6 +95,15 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
             setValue(item.title);
         }
     },[editMode])
+
+    useEffect(() => {
+        if(newItem !== null && !!newItem.type){
+            const id = newItem.id;
+            dispatch(appSlice.actions.setList(getUpdatedList(list,newItem.parent,'create')))
+            dispatch(appSlice.actions.setCreateMode(id));
+            dispatch(appSlice.actions.createItem(null));
+        }
+    },[newItem])
 
     return (
         <div
@@ -130,7 +136,7 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
                                 status={'cancel'}
                             />
                             <ItemButton
-                                onClick={onEdit}
+                                onClick={() => !!Value.trim() && onEdit()}
                                 status={'edit'}
                             />
                         </>
@@ -138,18 +144,18 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
                     {(!editMode && !createMode) && (
                         <ItemButton
                             status={'create'}
-                            onClick={onCreate}
+                            onClick={() => !blockClick && onCreate()}
                         />
                     )}
                     {(!alpha && !editMode && !createMode) && (
                         <>
                             <ItemButton
-                                onClick={() => dispatch(appSlice.actions.setEditMode(item.id))}
+                                onClick={() => !blockClick && dispatch(appSlice.actions.setEditMode(item.id))}
                                 status={'edit-start'}
                             />
                             <ItemButton
                                 status={'delete'}
-                                onClick={() => dispatch(appSlice.actions.setList(getUpdatedList(list,item.id,'delete')))}
+                                onClick={() => !blockClick && dispatch(appSlice.actions.setList(getUpdatedList(list,item.id,'delete')))}
                             />
                         </>
                     )}
