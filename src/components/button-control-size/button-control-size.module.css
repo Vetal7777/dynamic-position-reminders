@@ -1,0 +1,24 @@
+.container{
+    border: 8px solid white;
+    min-width: 30px;
+    min-height: 30px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+}
+.container:hover{
+    opacity: 0.5;
+}
+.line{
+    display: flex;
+    min-width: 100%;
+    background-color: #878D9D;
+    height: 2px;
+}
+.line:nth-child(2){
+    transform: rotate(90deg);
+    position: absolute;
+}

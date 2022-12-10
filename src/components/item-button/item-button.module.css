@@ -1,0 +1,28 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #e0e0e0;
+    border: 8px solid #e0e0e0;
+    border-radius: 50%;
+    min-width: 30px;
+    min-height: 30px;
+    cursor: pointer;
+}
+.container:hover{
+    opacity: 0.5;
+}
+.line{
+    width: 14px;
+    background-color: white;
+    height: 3px;
+}
+.line:nth-child(2){
+    position: absolute;
+    transform: rotate(90deg);
+}
+.delete{
+    background-color: red;
+    transform: rotate(45deg);
+    border-color: red;
+}

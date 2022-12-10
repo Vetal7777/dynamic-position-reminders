@@ -1,0 +1,32 @@
+.container{
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+.title{
+    display: flex;
+    column-gap: 5px;
+    align-items: center;
+}
+.title h1{
+    color: #555962;
+    font-weight: normal;
+}
+.logo{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f8c456;
+    border: 4px solid #f8c456;
+    font-weight: bold;
+    border-radius: 9px;
+    color: white;
+    line-height: 0;
+    min-height: 24px;
+    min-width: 24px;
+}
+.control{
+    display: flex;
+    column-gap: 5px;
+}

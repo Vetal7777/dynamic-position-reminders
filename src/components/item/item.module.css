@@ -1,0 +1,48 @@
+.item{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    position: relative;
+}
+.content{
+    border: 2px dashed #e0e0e0;
+    display: flex;
+    background-color: white;
+    color: black;
+    padding: 10px 20px;
+    width: max-content;
+}
+.line{
+    display: flex;
+    background-color: #e0e0e0;
+}
+.line.vertical{
+    min-width: 1px;
+    min-height: 20px;
+}
+.horizontal.line{
+    position: absolute;
+    width: calc(100% + 80px * 2);
+    min-height: 1px;
+}
+.horizontal.line.first{
+    width: calc((100% + 80px * 2)/2);
+    left: 50%;
+}
+.horizontal.line.last{
+    width: calc((100% + 80px * 2)/2);
+    right: 50%;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    align-items: center;
+    position: relative;
+}
+.control{
+    display: flex;
+    column-gap: 10px;
+    position: absolute;
+    right: -120px;
+}

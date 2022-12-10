@@ -1,0 +1,20 @@
+.container{
+    border: 1px solid #e0e0e0;
+    min-width: 100vw;
+    flex-grow: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container * {
+    user-select: none;
+}
+.content{
+    cursor: move;
+    margin: auto auto;
+    width: max-content;
+    height: max-content;
+    transform: translate(0px,0px) scale(1);
+}

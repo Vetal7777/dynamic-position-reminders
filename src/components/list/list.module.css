@@ -1,0 +1,7 @@
+.container{
+    display: flex;
+    column-gap: 150px;
+}
+.container * {
+    font-family: Arial;
+}
