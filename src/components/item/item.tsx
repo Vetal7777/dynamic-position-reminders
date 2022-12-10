@@ -124,7 +124,7 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
                         autoFocus
                         value={Value}
                         className={styles.content}
-                        placeholder={'Category name'}
+                        placeholder={`${item.type} name`}
                         onChange={({target}) => setValue(target.value)}
                     />
                 )}
