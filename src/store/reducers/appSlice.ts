@@ -31,7 +31,9 @@ export const appSlice = createSlice({
         setEditMode(state,action:PayloadAction<number | string | null>){
             state.editMode = action.payload;
         },
-
+        setCreateMode(state,action:PayloadAction<number | string | null>){
+            state.createMode = action.payload;
+        },
     }
 })
 

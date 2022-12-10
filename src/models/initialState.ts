@@ -3,7 +3,8 @@ export interface InitialState{
     size: number
     sizeVariables: number[],
     position : PositionI
-    editMode: number | null | string
+    editMode: number | null | string,
+    createMode: null | number | string
 }
 
 export interface ItemI{
