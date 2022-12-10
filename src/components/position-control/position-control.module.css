@@ -1,0 +1,17 @@
+.container{
+    border: 8px solid white;
+    min-width: 30px;
+    max-height: 30px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+.container:hover{
+    opacity: 0.5;
+}

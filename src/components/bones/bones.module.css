@@ -1,0 +1,21 @@
+.line{
+    display: flex;
+    background-color: #e0e0e0;
+}
+.line.vertical{
+    min-width: 1px;
+    min-height: 20px;
+}
+.horizontal.line{
+    position: absolute;
+    width: calc(100% + 80px * 2);
+    min-height: 1px;
+}
+.horizontal.line.first{
+    width: calc((100% + 80px * 2)/2);
+    left: 50%;
+}
+.horizontal.line.last{
+    width: calc((100% + 80px * 2)/2);
+    right: 50%;
+}

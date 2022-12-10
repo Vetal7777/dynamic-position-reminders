@@ -26,3 +26,12 @@
     transform: rotate(45deg);
     border-color: red;
 }
+.cancel{
+    transform: rotate(45deg);
+    border-color: #fce082;
+    background-color: #fce082;
+}
+.edit{
+    background-color: #5dcc70;
+    border-color: #5dcc70;
+}

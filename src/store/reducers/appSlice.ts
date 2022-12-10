@@ -22,12 +22,16 @@ export const appSlice = createSlice({
                 }
             }
         },
-        removeItem(state,action:PayloadAction<ItemI[]>){
+        setList(state,action:PayloadAction<ItemI[]>){
             state.list = action.payload
         },
         setPosition(state,action:PayloadAction<PositionI>){
             state.position = action.payload;
-        }
+        },
+        setEditMode(state,action:PayloadAction<number | string | null>){
+            state.editMode = action.payload;
+        },
+
     }
 })
 

@@ -15,7 +15,7 @@
 .line{
     display: flex;
     min-width: 100%;
-    background-color: #878D9D;
+    background-color: #e0e0e0;
     height: 2px;
 }
 .line:nth-child(2){

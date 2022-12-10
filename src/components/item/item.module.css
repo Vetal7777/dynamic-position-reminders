@@ -8,30 +8,13 @@
     border: 2px dashed #e0e0e0;
     display: flex;
     background-color: white;
-    color: black;
+    color: #878D9D;
     padding: 10px 20px;
     width: max-content;
 }
-.line{
-    display: flex;
-    background-color: #e0e0e0;
-}
-.line.vertical{
-    min-width: 1px;
-    min-height: 20px;
-}
-.horizontal.line{
-    position: absolute;
-    width: calc(100% + 80px * 2);
-    min-height: 1px;
-}
-.horizontal.line.first{
-    width: calc((100% + 80px * 2)/2);
-    left: 50%;
-}
-.horizontal.line.last{
-    width: calc((100% + 80px * 2)/2);
-    right: 50%;
+input.content{
+    color: black;
+    font-size: 16px;
 }
 .container{
     display: flex;
@@ -44,5 +27,5 @@
     display: flex;
     column-gap: 10px;
     position: absolute;
-    right: -120px;
+    left: calc(100% + 10px);
 }

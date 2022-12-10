@@ -6,6 +6,9 @@
     min-width: 70px;
     z-index: 2;
 }
+.select{
+    max-height: 30px;
+}
 .select,.option{
     background-color: white;
     padding: 10px;

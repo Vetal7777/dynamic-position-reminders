@@ -3,9 +3,11 @@ export interface InitialState{
     size: number
     sizeVariables: number[],
     position : PositionI
+    editMode: number | null | string
 }
 
 export interface ItemI{
+    type: 'Category' | 'Service'
     id:number | string,
     title: string,
     children: ItemI[] | []
