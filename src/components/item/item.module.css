@@ -4,15 +4,31 @@
     align-items: center;
     position: relative;
 }
-.content{
-    border: 2px dashed #e0e0e0;
+.content,
+.input{
+    border-radius: 5px;
     display: flex;
-    background-color: white;
-    color: #878D9D;
+    color: white;
     padding: 10px 20px;
     width: max-content;
+    background-color: #b5c5ce;
 }
-input.content{
+.zero,
+.input{
+    border: 2px dashed #e0e0e0;
+    background-color: white;
+    color: #878D9D;
+}
+.first{
+    background-color: #f5aa7d;
+}
+.second{
+    background-color: #4dbcde;
+}
+.third{
+    background-color: #b5c5ce;
+}
+.input{
     color: black;
     font-size: 16px;
 }

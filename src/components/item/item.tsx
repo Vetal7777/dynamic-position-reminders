@@ -18,7 +18,25 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
     const blockClick = !!newItem;
     const alpha = !item.id;
     const [Value,setValue] = useState<string>('')
+    const [depth,setDepth] = useState<number | null>(null);
 
+    function getDepth(list:ItemI[],id:number | string,depth:number):void{
+        list.forEach(item => {
+            const found = item.id === id;
+            const haveChildren = !!item.children.length;
+            switch (true) {
+                case found:
+                    setDepth(depth);
+                break;
+                case !id:
+                    setDepth(0)
+                break;
+                case !found && haveChildren:
+                    getDepth(item.children,id,(depth + 1) === 4 ? 1 : depth + 1);
+                break;
+            }
+        })
+    }
     function getUpdatedList(list:ItemI[],id:number | string,status: 'delete' | 'edit' | 'create'):ItemI[]{
         return list.reduce((acc,item) => {
             const remove = (status === 'delete') && (item.id !== id);
@@ -71,11 +89,17 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
             type: null,
             children: []
         };
-        if(alpha){
-            dispatch(appSlice.actions.setList([...list, {...data, type: 'Category'}]));
-            dispatch(appSlice.actions.setCreateMode(data.id));
-        }else{
-            dispatch(appSlice.actions.createItem({...data,parent: item.id}))
+        switch (true){
+            case alpha:
+                dispatch(appSlice.actions.setList([...list, {...data, type: 'Category'}]));
+                dispatch(appSlice.actions.setCreateMode(data.id));
+            break;
+            case !!item.children.length:
+                dispatch(appSlice.actions.createItem({...data,type: item.children[0].type,parent: item.id}))
+                dispatch(appSlice.actions.setCreateMode(data.id));
+            break;
+            default:
+                dispatch(appSlice.actions.createItem({...data,parent: item.id}))
         }
     }
     function onCancel(){
@@ -95,7 +119,6 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
             setValue(item.title);
         }
     },[editMode])
-
     useEffect(() => {
         if(newItem !== null && !!newItem.type){
             const id = newItem.id;
@@ -104,69 +127,74 @@ export default function Item({item,first,last,onlyOne}:{item:ItemI,first:boolean
             dispatch(appSlice.actions.createItem(null));
         }
     },[newItem])
+    useEffect(() => {
+        getDepth(list,item.id,1);
+    },[])
 
     return (
-        <div
-            className={styles.container}
-        >
-            {!alpha && !onlyOne && (
-                <Bones status={'top'} first={first} last={last}/>
-            )}
-            <div className={styles.item}>
-                {(!editMode && !createMode) && (
-                    <span
-                        children={item.title}
-                        className={styles.content}
-                    />
+        <>
+            <div
+                className={styles.container}
+            >
+                {!alpha && !onlyOne && (
+                    <Bones status={'top'} first={first} last={last}/>
                 )}
-                {(editMode || createMode) && (
-                    <input
-                        autoFocus
-                        value={Value}
-                        className={styles.content}
-                        placeholder={`${item.type} name`}
-                        onChange={({target}) => setValue(target.value)}
-                    />
-                )}
-                <div className={styles.control}>
-                    {(editMode || createMode) && (
-                        <>
-                            <ItemButton
-                                onClick={onCancel}
-                                status={'cancel'}
-                            />
-                            <ItemButton
-                                onClick={() => !!Value.trim() && onEdit()}
-                                status={'edit'}
-                            />
-                        </>
-                    )}
+                <div className={styles.item}>
                     {(!editMode && !createMode) && (
-                        <ItemButton
-                            status={'create'}
-                            onClick={() => !blockClick && onCreate()}
+                        <span
+                            children={item.title}
+                            className={`${styles.content} ${!depth ? styles.zero : 0} ${depth === 1 ? styles.first : ''} ${depth === 2 ? styles.second : ''} ${depth === 3 ? styles.third : ''}`}
                         />
                     )}
-                    {(!alpha && !editMode && !createMode) && (
-                        <>
-                            <ItemButton
-                                onClick={() => !blockClick && dispatch(appSlice.actions.setEditMode(item.id))}
-                                status={'edit-start'}
-                            />
-                            <ItemButton
-                                status={'delete'}
-                                onClick={() => !blockClick && dispatch(appSlice.actions.setList(getUpdatedList(list,item.id,'delete')))}
-                            />
-                        </>
+                    {(editMode || createMode) && (
+                        <input
+                            autoFocus
+                            value={Value}
+                            className={styles.input}
+                            placeholder={`${item.type} name`}
+                            onChange={({target}) => setValue(target.value)}
+                        />
                     )}
+                    <div className={styles.control}>
+                        {(editMode || createMode) && (
+                            <>
+                                <ItemButton
+                                    onClick={onCancel}
+                                    status={'cancel'}
+                                />
+                                <ItemButton
+                                    onClick={() => !!Value.trim() && onEdit()}
+                                    status={'edit'}
+                                />
+                            </>
+                        )}
+                        {(!editMode && !createMode) && (
+                            <ItemButton
+                                status={'create'}
+                                onClick={() => !blockClick && onCreate()}
+                            />
+                        )}
+                        {(!alpha && !editMode && !createMode) && (
+                            <>
+                                <ItemButton
+                                    onClick={() => !blockClick && dispatch(appSlice.actions.setEditMode(item.id))}
+                                    status={'edit-start'}
+                                />
+                                <ItemButton
+                                    status={'delete'}
+                                    onClick={() => !blockClick && dispatch(appSlice.actions.setList(getUpdatedList(list,item.id,'delete')))}
+                                />
+                            </>
+                        )}
+                    </div>
                 </div>
+                {!!item.children.length && (
+                    <>
+                        <Bones status={'bottom'}/>
+                        <List list={item.children}/>
+                    </>
+                )}
             </div>
-            {!!item.children.length && (
-                <>
-                    <Bones status={'bottom'}/>
-                    <List list={item.children}/>
-                </>
-            )}
-        </div>
+        </>
     )
 }
