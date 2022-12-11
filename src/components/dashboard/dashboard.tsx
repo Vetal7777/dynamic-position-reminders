@@ -1,11 +1,12 @@
 import styles from './dashboard.module.css'
 import List from "../list/list";
 import {useAppSelector} from "../../hooks/redux";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {ItemI, PositionI} from "../../models/initialState";
 import {useDispatch} from "react-redux";
 import {appSlice} from "../../store/reducers/appSlice";
 import Message from "../message/message";
+import ArrowControlPosition from "../arrow-control-position/arrow-control-position";
 
 export default function Dashboard(){
     const dispatch = useDispatch();
@@ -20,8 +21,8 @@ export default function Dashboard(){
     const showMessage = !!newItem;
     const createMode = useAppSelector(({createMode}) => createMode);
     const editMode = useAppSelector(({editMode}) => !!editMode);
-    const scale = useAppSelector(({size}) => size)
-    const position = useAppSelector(({position}) => position);
+    const scale = useAppSelector(({size}) => size);
+    const editPosition = useAppSelector(({position}) => position);
     const [initialPosition,setInitialPosition] = useState<PositionI | null>(null);
     const [move,setMove] = useState<boolean>(false);
 
@@ -41,25 +42,34 @@ export default function Dashboard(){
             ))
         }
     }
-    function onEndMove(){
-        setMove(false)
-    }
 
     return (
         <>
             <div
                 className={styles.container}
-                onMouseLeave={() => move && onEndMove()}
-                onMouseUp={onEndMove}
+                onMouseLeave={() => move && setMove(false)}
+                onMouseUp={() => setMove(false)}
                 onMouseMove={({nativeEvent}) => onMove({x:nativeEvent.x,y:nativeEvent.y})}
 
             >
+                <ArrowControlPosition
+                    type={'top'}
+                />
+                <ArrowControlPosition
+                    type={'bottom'}
+                />
+                <ArrowControlPosition
+                    type={'left'}
+                />
+                <ArrowControlPosition
+                    type={'right'}
+                />
                 {showMessage && (
                     <Message onClick={(type) => dispatch(appSlice.actions.createItem({...newItem,type: type}))}/>
                 )}
                 <div
                     style={{
-                        transform: `scale(${scale}) translate(${position.x/scale}px,${position.y/scale}px)`,
+                        transform: `scale(${scale}) translate(${editPosition.x/scale}px,${editPosition.y/scale}px)`,
                     }}
                     className={styles.content}
                     onMouseDown={({nativeEvent}) => !showMessage && onStartMove({x:nativeEvent.x,y:nativeEvent.y})}

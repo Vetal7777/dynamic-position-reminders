@@ -1,0 +1,29 @@
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccd5de;
+    position: absolute;
+    min-width: 120px;
+    min-height: 30px;
+    cursor: pointer;
+    z-index: 10;
+}
+.container:hover{
+    opacity: 0.5;
+}
+.top{
+    top: 0;
+}
+.bottom{
+    bottom: 0;
+    transform: rotate(180deg);
+}
+.left{
+    left: -45px;
+    transform: rotate(270deg);
+}
+.right{
+    right: -45px;
+    transform: rotate(90deg);
+}
