@@ -1,8 +1,8 @@
-# React Reminders App
+# Dynamic React Reminders App
 
 ## Overview
 
-This is a simple React-based Reminders application that allows users to create new reminders with titles. Additionally, users can change the position and scale of the reminders, providing a dynamic and interactive user experience.
+This is a simple Dynamic React-based Reminders application that allows users to create new reminders with titles. Additionally, users can change the position and scale of the reminders, providing a dynamic and interactive user experience.
 
 ## Features
 
